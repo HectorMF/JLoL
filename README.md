@@ -8,7 +8,7 @@ Cached Champion queries with cache timeout
 
 How to query:
 
-import com.perfectplay.org.League;
+	import com.perfectplay.org.League;
 
 	//set up query parameters
 	League.region = "na";
@@ -17,9 +17,12 @@ import com.perfectplay.org.League;
 	//query away
 	Champion[] champions =  League.getChampions();
 	Champion[] freeChampions = League.getFreeChampions();
+	
+	//query a single champion
 	Champion vi = League.getChampion("vi");
 	int attackRank = vi.getAttackRank();
 
-	will finish this later today.(12/11/13)
+
+will finish this later today.(12/11/13)
 	
 
