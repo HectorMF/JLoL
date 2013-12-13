@@ -22,26 +22,26 @@ Simple Java wrapper for the League of Legends API with built in data caching and
 
 	import com.perfectplay.org.League;
 
-	//set up query parameters
+set up query parameters
 	League.region = "na";
 	League.api_key = "XXXXX-XXXXXX-XXXX-XXXXXXXXXXXX";
 	
-	//query champions
+query champions
 	Champion[] champions =  League.getChampions();
 	Champion[] freeChampions = League.getFreeChampions();
 	
-	//query a single champion
+query a single champion
 	Champion vi = League.getChampion("vi");
 	int attackRank = vi.getAttackRank();
 	
-	//query a summoner
+query a summoner
 	Summoner dyrus = League.getSummoner("Dyrus");
 	
-	//query masteries/runes from a summoner or do a seperate query 
+query masteries/runes from a summoner or do a seperate query 
 	RunePage[] runes = dyrus.getRunes();
 	MasteryPage[] masteries = League.getMasteries("Dyrus");
 	
-	//Handle invalid queries
+Handle invalid queries
 	try{
 		Talent talent = League.getMasteries("Random_Player")[0].getTalents()[0];
 	}catch(InvalidQueryException e){
@@ -54,7 +54,7 @@ Simple Java wrapper for the League of Legends API with built in data caching and
 		etc....
 	}
 	
-	//Check to see how many queries have been called
+Check to see how many queries have been called
 	League.getQueryCount();
 
 
