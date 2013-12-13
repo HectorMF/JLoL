@@ -3,20 +3,20 @@ JLoL
 
 Simple Java wrapper for the League of Legends API with built in data caching and cache timeout.
 
-Currently Supported:
--Champion queries
--Summoner queries
--Rune page queries
--Mastery queries
--Custom Exception handling
--Data caching
--Cache timeout
+Currently Supported:  
+-Champion queries  
+-Summoner queries  
+-Rune page queries  
+-Mastery queries  
+-Custom Exception handling  
+-Data caching  
+-Cache timeout  
 
-To Do:
--Team queries
--Stats queries
--Game queries
--League queries
+To Do:  
+-Team queries  
+-Stats queries  
+-Game queries  
+-League queries  
 
 How to query:
 
