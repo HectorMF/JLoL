@@ -3,7 +3,7 @@ JLoL
 
 Simple Java wrapper for the League of Legends API with built in data caching and cache timeout.
 
-Currently Supported:  
+### Currently Supported:  
 -Champion queries  
 -Summoner queries  
 -Rune page queries  
@@ -12,13 +12,13 @@ Currently Supported:
 -Data caching  
 -Cache timeout  
 
-To Do:  
+### To Do:  
 -Team queries  
 -Stats queries  
 -Game queries  
 -League queries  
 
-How to query:
+### How to query:
 
 	import com.perfectplay.org.League;
 
