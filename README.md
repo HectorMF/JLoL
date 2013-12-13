@@ -45,10 +45,10 @@ Simple Java wrapper for the League of Legends API with built in data caching and
 	try{
 		Talent talent = League.getMasteries("Random_Player")[0].getTalents()[0];
 	}catch(InvalidQueryException e){
-		if(e.Error = InvalidQueryException.NOT_FOUND){
+		if(e.Error == InvalidQueryException.NOT_FOUND){
 			System.out.println("OH NO! Player not found!");
 		}
-		if(e.Error = InvalidQueryException.REQUEST_LIMIT){
+		if(e.Error == InvalidQueryException.REQUEST_LIMIT){
 			System.out.println("only 5 per 10 seconds and 50 per 10 minutes!");
 		}
 		etc....
