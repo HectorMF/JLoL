@@ -22,7 +22,7 @@ import org.joda.time.DateTime;
 */
 class ChampionQuery extends Query{
 	private static HashMap<String,Champion> champions = new HashMap<String,Champion>();
-	static Long cache_refresh = 000000l;
+	static Long cache_refresh = 3600000l;
 	
 	/*
  	 * Queries the servers for all currently available champions. 
@@ -30,10 +30,10 @@ class ChampionQuery extends Query{
  	 * 
  	 * @throws IOException if querying the server fails
 	 */
-	private static void Query() throws InvalidQueryException{
+	private static void query() throws InvalidQueryException{
 		try {
 			count++;
-			URL url = new URL(ChampionQuery.generateChampionURL());
+			URL url = new URL(Query.generateChampionURL());
 		    JsonReader reader = Json.createReader(url.openStream());
 		    champions.clear();
 		    JsonArray champs = reader.readObject().getJsonArray("champions");
@@ -62,18 +62,34 @@ class ChampionQuery extends Query{
 		}
 	}
 	
-	
+	/*
+	 * Returns a champion with the given name, or null
+	 */
 	static Champion getChampion(String name){
 		Champion champion = champions.get(name.toLowerCase());
 		if(champion == null){
-			Query();
+			query();
 			champion = champions.get(name.toLowerCase());
 		}else if(DateTime.now().isAfter(champion.getTimeCached().plus(cache_refresh))){
-			Query();
+			query();
 			champion = champions.get(name.toLowerCase());
 		}
 		
 		return champion;
+	}
+	
+	/*
+	 * Returns a champion with the given id or null
+	 */
+	static Champion getChampion(long id){
+		if(champions.size() == 0){
+			query();
+		}
+		for(Champion champ : champions.values()){
+			if(champ.getId() == id)
+				return champ;
+		}
+		return null;
 	}
 	
 	/*
@@ -82,10 +98,10 @@ class ChampionQuery extends Query{
 	static Champion[] getChampions(){
 		Champion[] champs = ChampionQuery.champions.values().toArray(new Champion[ChampionQuery.champions.values().size()]);
 		if(champs.length == 0){
-			Query();
+			query();
 			champs = ChampionQuery.champions.values().toArray(new Champion[ChampionQuery.champions.values().size()]);
 		}else if(DateTime.now().isAfter(champs[0].getTimeCached().plus(cache_refresh))){
-			Query();
+			query();
 			champs = ChampionQuery.champions.values().toArray(new Champion[ChampionQuery.champions.values().size()]);
 		}
 		return champs;
@@ -97,10 +113,10 @@ class ChampionQuery extends Query{
 	static Champion[] getFreeChampions(){
 		ArrayList<Champion> freeChampions = new ArrayList<Champion>(ChampionQuery.champions.values());
 		if(freeChampions.size() == 0){
-			Query();
+			query();
 			freeChampions = new ArrayList<Champion>(ChampionQuery.champions.values());
 		}else if(DateTime.now().isAfter(freeChampions.get(0).getTimeCached().plus(cache_refresh))){
-			Query();
+			query();
 			freeChampions = new ArrayList<Champion>(ChampionQuery.champions.values());
 		}
 		for(int i = freeChampions.size() - 1; i >= 0; i--){
@@ -111,8 +127,7 @@ class ChampionQuery extends Query{
 		return freeChampions.toArray(new Champion[freeChampions.size()]);
 	}
 
-	@Override
-	void clear() {
+	static void clear() {
 		champions.clear();
 	}
 }

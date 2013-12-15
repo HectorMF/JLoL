@@ -7,7 +7,7 @@ abstract class Query {
 	/*
 	 * Clears the Cache
 	 */
-	abstract void clear();
+	static void clear() {}
 	
 	/*
 	 * Generates a URL to get a summoner's mastery pages
@@ -54,5 +54,12 @@ abstract class Query {
 	 */
 	protected static String generateChampionURL(){
 		return host + "/api/lol/" + League.region + "/v1.1/champion?api_key=" + League.api_key;
+	}
+	
+	/*
+	 * Generates a URL to get game info
+	 */
+	protected static String generateGameURL(long id){
+		return host + "/api/lol/" + League.region + "/v1.1/game/by-summoner/" + id + "/recent?api_key=" + League.api_key;
 	}
 }

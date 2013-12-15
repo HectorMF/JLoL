@@ -61,7 +61,28 @@ public class League {
 		return SummonerQuery.getRunes(summoner.getId());
 	}
 	
+	public static Game[] getRecentGames(String name) throws InvalidQueryException{
+		Summoner summoner = getSummoner(name);
+		return GameQuery.getGames(summoner.getId());
+	}
+	
+	public static Game[] getRecentGames(long id) throws InvalidQueryException{
+		return GameQuery.getGames(id);
+	}
+	
 	public static int getQueryCount(){
 		return Query.count;
+	}
+	
+	public static void clearCache(){
+		ChampionQuery.clear();
+		GameQuery.clear();
+		SummonerQuery.clear();
+	}
+	
+	public static void disableCache(){
+		ChampionQuery.cache_refresh = 0l;
+		GameQuery.cache_refresh = 0l;
+		SummonerQuery.cache_refresh = 0l;
 	}
 }

@@ -11,11 +11,11 @@ public class InvalidQueryException extends RuntimeException {
 	public static final int SERVER_ERROR = 500;
 	public static final int Other = 0;
 	
-	public final int Error;
+	public final int error;
 	
 	public InvalidQueryException(int error, String string) {
 		super(string);
-		this.Error = error;
+		this.error = error;
 	}
 	
 	static InvalidQueryException generateException(String error){

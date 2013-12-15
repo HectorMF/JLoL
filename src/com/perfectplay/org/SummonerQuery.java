@@ -24,7 +24,7 @@ class SummonerQuery extends Query{
 	private static HashMap<Long, MasteryPage[]> masteriesById = new HashMap<Long, MasteryPage[]>();
 	private static HashMap<Long, RunePage[]> runesById = new HashMap<Long, RunePage[]>();
 	
-	static Long cache_refresh = 1000000l;
+	static Long cache_refresh = 3600000l;
 	
 	/*
  	 * Queries the servers for a summoner given their name. 
@@ -32,10 +32,10 @@ class SummonerQuery extends Query{
  	 * 
  	 * @throws InvalidQueryException if querying the server fails
 	 */	
-	private static void QueryByName(String name){
+	private static void queryByName(String name){
 		try {
 			count++;
-			URL url = new URL(SummonerQuery.generateSummonerNameURL(name));
+			URL url = new URL(Query.generateSummonerNameURL(name));
 		    JsonReader reader = Json.createReader(url.openStream());
 		    JsonObject summoner = reader.readObject();
 		    String sName = summoner.getString("name");
@@ -69,10 +69,10 @@ class SummonerQuery extends Query{
  	 * 
  	 * @throws InvalidQueryException if querying the server fails
 	 */	
-	private static void QueryById(Long id){
+	private static void queryById(Long id){
 		try {
 			count++;
-			URL url = new URL(SummonerQuery.generateSummonerIdURL(id));
+			URL url = new URL(Query.generateSummonerIdURL(id));
 		    JsonReader reader = Json.createReader(url.openStream());
 		    JsonObject summoner = reader.readObject();
 		    String sName = summoner.getString("name");
@@ -106,10 +106,10 @@ class SummonerQuery extends Query{
  	 * 
  	 * @throws InvalidQueryException if querying the server fails
 	 */	
-	private static void QueryMasteries(long id){
+	private static void queryMasteries(long id){
 		try {
 			count++;
-			URL url = new URL(SummonerQuery.generateMasteryURL(id));
+			URL url = new URL(Query.generateMasteryURL(id));
 		    JsonReader reader = Json.createReader(url.openStream());
 		    JsonObject query = reader.readObject();
 		    JsonArray pages = (JsonArray) query.get("pages");
@@ -143,10 +143,10 @@ class SummonerQuery extends Query{
  	 * 
  	 * @throws InvalidQueryException if querying the server fails
 	 */	
-	private static void QueryRunes(long id){
+	private static void queryRunes(long id){
 		try {
 			count++;
-			URL url = new URL(SummonerQuery.generateRuneURL(id));
+			URL url = new URL(Query.generateRuneURL(id));
 		    JsonReader reader = Json.createReader(url.openStream());
 		    JsonObject query = reader.readObject();
 		    JsonArray pages = (JsonArray) query.get("pages");
@@ -186,10 +186,10 @@ class SummonerQuery extends Query{
 	static Summoner getSummoner(String name){
 		Summoner summoner = summonersByName.get(name.toLowerCase());
 		if(summoner == null){
-			QueryByName(name);
+			queryByName(name);
 			summoner = summonersByName.get(name.toLowerCase());
 		}else if(DateTime.now().isAfter(summoner.getTimeCached().plus(cache_refresh))){
-			QueryByName(name);
+			queryByName(name);
 			summoner = summonersByName.get(name.toLowerCase());
 		}
 		return summoner;
@@ -201,10 +201,10 @@ class SummonerQuery extends Query{
 	static Summoner getSummoner(long id){
 		Summoner summoner = summonersById.get(id);
 		if(summoner == null){
-			QueryById(id);
+			queryById(id);
 			summoner = summonersById.get(id);
 		}else if(DateTime.now().isAfter(summoner.getTimeCached().plus(cache_refresh))){
-			QueryById(id);
+			queryById(id);
 			summoner = summonersById.get(id);
 		}
 		return summoner;
@@ -216,10 +216,10 @@ class SummonerQuery extends Query{
 	static MasteryPage[] getMasteries(long id){
 		MasteryPage[] pages = masteriesById.get(id);
 		if(pages == null){
-			QueryMasteries(id);
+			queryMasteries(id);
 			pages = masteriesById.get(id);
 		}else if(DateTime.now().isAfter(pages[0].getTimeCached().plus(cache_refresh))){
-			QueryMasteries(id);
+			queryMasteries(id);
 			pages = masteriesById.get(id);
 		}
 		return pages;
@@ -231,10 +231,10 @@ class SummonerQuery extends Query{
 	static RunePage[] getRunes(long id){
 		RunePage[] pages = runesById.get(id);
 		if(pages == null){
-			QueryRunes(id);
+			queryRunes(id);
 			pages = runesById.get(id);
 		}else if(DateTime.now().isAfter(pages[0].getTimeCached().plus(cache_refresh))){
-			QueryRunes(id);
+			queryRunes(id);
 			pages = runesById.get(id);
 		}
 		return pages;
@@ -264,8 +264,7 @@ class SummonerQuery extends Query{
 		return summonerNames;
 	}
 
-	@Override
-	void clear() {
+	static void clear() {
 		summonersById.clear();
 		summonersByName.clear();
 		masteriesById.clear();
