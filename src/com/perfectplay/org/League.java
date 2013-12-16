@@ -1,88 +1,50 @@
 package com.perfectplay.org;
 
+import org.joda.time.DateTime;
 
-public class League {
-	public static String api_key = "";
-	public static String region = "";
-
-	private League() { }
+public class League extends CachedObject {
+	private String name;
+	private String queue;
+	private String tier;
+	private long timeStamp;
+	private LeagueItem[] entries;
 	
-	/*
-	 * Returns a champion, given it's name. 
-	 */
-	public static Champion getChampion(String name) throws InvalidQueryException{
-		return ChampionQuery.getChampion(name);
+	League(DateTime time_cached, String name, String queue, String tier, long timeStamp, LeagueItem[] entries){
+		this.time_cached = time_cached;
+		this.name = name;
+		this.queue = queue;
+		this.tier = tier;
+		this.timeStamp = timeStamp;
+		this.entries = entries;
 	}
 	
-	/**
-	 * Returns an array of all champions
-	 */
-	public static Champion[] getChampions() throws InvalidQueryException{
-		return ChampionQuery.getChampions();
+	public String getName(){
+		return name;
 	}
 	
-	/*
-	 * Returns an Array of all champions in the free champion rotation
-	 */
-	public static Champion[] getFreeChampions() throws InvalidQueryException{
-		return ChampionQuery.getFreeChampions();
+	public String getQueue(){
+		return queue;
 	}
 	
-	/**
-	 * Returns the summoner with the given name
-	 * @throws InvalidQueryException
-	 */
-	public static Summoner getSummoner(String name) throws InvalidQueryException{
-		return SummonerQuery.getSummoner(name);
+	public String getTier(){
+		return tier;
 	}
 	
-	/* 
-	 * Returns the summoner with the given id
-	 */
-	public static Summoner getSummoner(long id) throws InvalidQueryException{
-		return SummonerQuery.getSummoner(id);
+	public long getTimeStamp(){
+		return timeStamp;
 	}
 	
-	public static MasteryPage[] getSummonerMasteries(long id) throws InvalidQueryException{
-		return SummonerQuery.getMasteries(id);
+	public LeagueItem[] getEntries(){
+		return entries;
 	}
 	
-	public static RunePage[] getSummonerRunes(long id) throws InvalidQueryException{
-		return SummonerQuery.getRunes(id);
-	}
-	
-	public static MasteryPage[] getSummonerMasteries(String name) throws InvalidQueryException{
-		Summoner summoner = getSummoner(name);
-		return SummonerQuery.getMasteries(summoner.getId());
-	}
-	
-	public static RunePage[] getSummonerRunes(String name) throws InvalidQueryException{
-		Summoner summoner = getSummoner(name);
-		return SummonerQuery.getRunes(summoner.getId());
-	}
-	
-	public static Game[] getRecentGames(String name) throws InvalidQueryException{
-		Summoner summoner = getSummoner(name);
-		return GameQuery.getGames(summoner.getId());
-	}
-	
-	public static Game[] getRecentGames(long id) throws InvalidQueryException{
-		return GameQuery.getGames(id);
-	}
-	
-	public static int getQueryCount(){
-		return Query.count;
-	}
-	
-	public static void clearCache(){
-		ChampionQuery.clear();
-		GameQuery.clear();
-		SummonerQuery.clear();
-	}
-	
-	public static void disableCache(){
-		ChampionQuery.cache_refresh = 0l;
-		GameQuery.cache_refresh = 0l;
-		SummonerQuery.cache_refresh = 0l;
+	public String toString(){
+		String temp = "";
+		for(int i = 0; i < entries.length - 1; i++){
+			temp += entries[i].toString() + ",";
+		}
+		if(entries.length > 0)
+			temp += entries[entries.length - 1].toString();
+		return "[Queue:" + queue + ", Tier:" + tier + ", Name:" + name + ", Time Stamp:" + timeStamp + ", Entries:" + temp + "]";
 	}
 }
