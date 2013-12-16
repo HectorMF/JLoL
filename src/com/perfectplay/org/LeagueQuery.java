@@ -2,7 +2,9 @@ package com.perfectplay.org;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.Map;
+
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -10,10 +12,11 @@ import javax.json.JsonReader;
 
 import org.joda.time.DateTime;
 
-public class LeagueQuery extends Query{
-	private static HashMap<Long, League[]> leaguesById = new HashMap<Long, League[]>();
+class LeagueQuery extends Query{
 	static long cache_refresh = 3600000l;
-	
+	static int cache_size = 100;
+	private static Map<Long, League[]> leaguesById = Collections.synchronizedMap(new LruCache<Long, League[]>(cache_size));
+
 	private static void query(long id){
 		try {
 			count++;
@@ -73,7 +76,7 @@ public class LeagueQuery extends Query{
 		}
 	}
 	
-	public static League[] getLeague(long id){
+	static League[] getLeague(long id){
 		League[] league = leaguesById.get(id);
 		if(league == null){
 			query(id);
@@ -85,5 +88,9 @@ public class LeagueQuery extends Query{
 			}
 		}
 		return league;
+	}
+	
+	static void clear(){
+		leaguesById.clear();
 	}
 }

@@ -70,6 +70,15 @@ public class JLoL {
 		return GameQuery.getGames(id);
 	}
 	
+	public static League[] getLeagues(long id) throws InvalidQueryException{
+		return LeagueQuery.getLeague(id);
+	}
+	
+	public static League[] getLeagues(String name) throws InvalidQueryException{
+		Summoner summoner = getSummoner(name);
+		return LeagueQuery.getLeague(summoner.getId());
+	}
+	
 	public static int getQueryCount(){
 		return Query.count;
 	}
@@ -78,6 +87,7 @@ public class JLoL {
 		ChampionQuery.clear();
 		GameQuery.clear();
 		SummonerQuery.clear();
+		LeagueQuery.clear();
 	}
 	
 	public static void disableCache(){

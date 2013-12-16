@@ -32,6 +32,10 @@ public class Summoner extends CachedObject{
 		return SummonerQuery.getRunes(id);
 	}
 	
+	public League[] getLeagues(){
+		return LeagueQuery.getLeague(id);
+	}
+	
 	public long getId(){
 		return id;
 	}

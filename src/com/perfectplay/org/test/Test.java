@@ -1,10 +1,7 @@
 package com.perfectplay.org.test;
 
-import com.perfectplay.org.Game;
-import com.perfectplay.org.GamePlayer;
-import com.perfectplay.org.JLoL;
-import com.perfectplay.org.League;
-import com.perfectplay.org.LeagueQuery;
+import com.perfectplay.org.*;
+
 public class Test {
 
 	public Test(){
@@ -16,9 +13,14 @@ public class Test {
 			System.out.println(game);
 		}
 		GamePlayer[] players = games[0].getPlayers();
-		System.out.println(players[1].getChampion().getName());
-		League[] leagues = LeagueQuery.getLeague(JLoL.getSummoner("KOR Kez").getId());
+		//System.out.println(players[1].getChampion().getName());
 		
+		League[] leagues = JLoL.getLeagues("KOR Kez");
+		System.out.println(JLoL.getQueryCount());
+		leagues = JLoL.getLeagues("Dyrus");
+
+		leagues = JLoL.getLeagues("KOR Kez");
+		System.out.println(JLoL.getQueryCount());
 		for(League league : leagues){
 			System.out.println(league);
 		}

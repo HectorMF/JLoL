@@ -2,7 +2,9 @@ package com.perfectplay.org;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.Map;
+
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -11,8 +13,10 @@ import javax.json.JsonReader;
 import org.joda.time.DateTime;
 
 class GameQuery extends Query{
-	private static HashMap<Long, Game[]> gamesById = new HashMap<Long,Game[]>();
-	static Long cache_refresh = 3600000l;
+	static long cache_refresh = 3600000l;
+	static int cache_size = 100;
+	
+	private static Map<Long, Game[]> gamesById = Collections.synchronizedMap(new LruCache<Long, Game[]>(cache_size));
 	
 	/*
  	 * Queries the servers for a list of recently played games for a given summoner 

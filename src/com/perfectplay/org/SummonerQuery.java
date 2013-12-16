@@ -2,7 +2,9 @@ package com.perfectplay.org;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -18,13 +20,13 @@ import org.joda.time.DateTime;
 * @version 1.0 12/13/13
 */
 class SummonerQuery extends Query{
-	private static HashMap<String, Summoner> summonersByName = new HashMap<String, Summoner>();
-	private static HashMap<Long, Summoner> summonersById = new HashMap<Long, Summoner>();
+	static long cache_refresh = 3600000l;
+	static int cache_size = 100;
+	private static Map<String, Summoner> summonersByName = Collections.synchronizedMap(new LruCache<String, Summoner>(cache_size));
+	private static Map<Long, Summoner> summonersById = Collections.synchronizedMap(new LruCache<Long, Summoner>(cache_size));
 	
-	private static HashMap<Long, MasteryPage[]> masteriesById = new HashMap<Long, MasteryPage[]>();
-	private static HashMap<Long, RunePage[]> runesById = new HashMap<Long, RunePage[]>();
-	
-	static Long cache_refresh = 3600000l;
+	private static Map<Long, MasteryPage[]> masteriesById = Collections.synchronizedMap(new LruCache<Long, MasteryPage[]>(cache_size));
+	private static Map<Long, RunePage[]> runesById = Collections.synchronizedMap(new LruCache<Long, RunePage[]>(cache_size));
 	
 	/*
  	 * Queries the servers for a summoner given their name. 
