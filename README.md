@@ -1,8 +1,6 @@
 JLoL
 ====
 
-## Overview
-
 JLoL is a Java wrapper for the League of Legends API with built in data caching and cache timeout to minimize API calls.
 
 ## Setting Up
@@ -27,6 +25,55 @@ This code is used to setup the environment for querying.
 
 Simply changing the api_key or region will alter the parameters for newly made queries. To turn off caching, simply set the cache size to 0. Timeout determines if a cached item is too old to be reliable. Cached elements that pass their age limit, are not removed from the cache.
 
+## Querying
+
+The following code queries a summoner from the League servers.
+
+```java
+	Summoner dyrus = JLOL.getSummoner("Dyrus");
+```
+
+Note that if caching is enabled, multiple calls to retrieve this summoner will result in only 1 server query.
+The summoner class provides access to all summoner related data, as well as other useful queries.
+
+```java
+	//standard summoner data
+	int level = dyrus.getLevel();
+	int profileIcon = dyrus.getIconId();
+	
+	//other queryable data.
+	RunePage[] runes = dyrus.getRunes();
+	MasteryPage[] masteries = dyrus.getMasteries();
+	League[] leagues = dyrus.getLeagues();
+	Game[] recentGames = dyrus.getRecentGames();
+```
+
+Querying a champion is similar to querying for a summoner.
+
+```java
+	//query champions, this code will only query the league servers once
+	Champion[] champions =  JLOL.getChampions();
+	Champion[] freeChampions = JLOL.getFreeChampions();
+	
+	//query a single champion
+	Champion vi = JLOL.getChampion("vi");
+	int attackRank = vi.getAttackRank();
+```
+
+The other queries follow this format and are also found under the JLOL class.
+
+##### Currently Supported Queries:
+-Champion queries  
+-Summoner queries  
+-Rune page queries  
+-Mastery queries 
+-Game queries 
+-League queries  
+
+##### To DO:
+-Team queries  
+-Stats queries  
+
 ## Exception Handling
 
 JLoL uses a custom unchecked exception to handle invalid queries made to the League of Legends servers. 
@@ -50,106 +97,16 @@ As the exceptions are unchecked, handling them is not enforced by the compiler. 
 	}
 ```
 
-## Querying a Summoner
+## Utility
 
-The following code queries a summoner from the League servers.
-
-```java
-	Summoner dyrus = JLOL.getSummoner("Dyrus");
-```
-
-Note that if caching is enabled, multiple calls to retrieve this summoner will result in only 1 server query.
-The summoner class provides access to all summoner related data, as well as other useful queries.
+Getting the total number of queries made:
 
 ```java
-	//standard summoner data
-	int level = dyrus.getLevel();
-	int profileIcon = dyrus.getIconId();
-	
-	//other queryable data.
-	RunePage[] runes = dyrus.getRunes();
-	MasteryPage[] masteries = dyrus.getMasteries();
-	League[] leagues = dyrus.getLeagues();
+	int queries = JLOL.getQueryCount();
 ```
 
-## Querying a Champion
-
-Querying a champion is similar to querying for a summoner
-
+Clearing all caches:
 
 ```java
-	//query champions, this code will only query the league servers once
-	Champion[] champions =  JLOL.getChampions();
-	Champion[] freeChampions = JLOL.getFreeChampions();
-	
-	//query a single champion
-	Champion vi = JLOL.getChampion("vi");
-	int attackRank = vi.getAttackRank();
+	JLOL.clearCache();
 ```
-JLoL
-====
-
-Simple Java wrapper for the League of Legends API with built in data caching and cache timeout to minimize API calls.
-
-### Currently Supported:  
--Champion queries  
--Summoner queries  
--Rune page queries  
--Mastery queries  
--Custom Exception handling  
--Data caching  
--Cache timeout  
--Game queries 
-
-### To Do:  
--Team queries  
--Stats queries  
--League queries  
-
-### How to query:
-
-	import com.perfectplay.org.League;
-
-	//set up query parameters
-	League.region = "na";
-	League.api_key = "XXXXX-XXXXXX-XXXX-XXXXXXXXXXXX";
-	
-	//query champions
-	Champion[] champions =  League.getChampions();
-	Champion[] freeChampions = League.getFreeChampions();
-	
-	//query a single champion
-	Champion vi = League.getChampion("vi");
-	int attackRank = vi.getAttackRank();
-	
-	//query a summoner
-	Summoner dyrus = League.getSummoner("Dyrus");
-	
-	//query masteries/runes from a summoner or do a seperate query 
-	RunePage[] runes = dyrus.getRunes();
-	MasteryPage[] masteries = League.getMasteries("Dyrus");
-	
-	//Handle invalid queries
-	try{
-		Talent talent = League.getMasteries("Random_Player")[0].getTalents()[0];
-	}catch(InvalidQueryException e){
-		if(e.error == InvalidQueryException.NOT_FOUND){
-			System.out.println("OH NO! Player not found!");
-		}
-		if(e.error == InvalidQueryException.REQUEST_LIMIT){
-			System.out.println("only 5 per 10 seconds and 50 per 10 minutes!");
-		}
-		etc....
-	}
-	
-	//Game Queries
-	
-	Game[] recentGames = League.getRecentGames("Flamespewer");
-	
-	//get the name of the champion that I just played
-	System.out.println(recentGames[0].getChampion().getName());
-	
-	//Check to see how many queries have been called
-	League.getQueryCount();
-
-
