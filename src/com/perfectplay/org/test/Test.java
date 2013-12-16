@@ -8,9 +8,9 @@ public class Test {
 		JLoL.region = "na";
 		JLoL.api_key = "";
 		Game[] games = JLoL.getRecentGames("Galeren");
-		
+		System.out.println(JLoL.getChampion("test"));
 		for(Game game: games){
-			System.out.println(game);
+			
 		}
 		GamePlayer[] players = games[0].getPlayers();
 		//System.out.println(players[1].getChampion().getName());
@@ -24,6 +24,7 @@ public class Test {
 		for(League league : leagues){
 			System.out.println(league);
 		}
+		
 	}
 	public static void main(String[] args){
 		new Test();

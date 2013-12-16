@@ -273,6 +273,12 @@ class SummonerQuery extends Query{
 		runesById.clear();	
 	}
 	
+	static void resize(){
+		summonersByName = Collections.synchronizedMap(new LruCache<String, Summoner>(cache_size));
+		summonersById = Collections.synchronizedMap(new LruCache<Long, Summoner>(cache_size));
+		masteriesById = Collections.synchronizedMap(new LruCache<Long, MasteryPage[]>(cache_size));
+		runesById = Collections.synchronizedMap(new LruCache<Long, RunePage[]>(cache_size));
+	}
 	
 	
 }

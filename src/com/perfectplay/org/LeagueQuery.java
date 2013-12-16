@@ -93,4 +93,8 @@ class LeagueQuery extends Query{
 	static void clear(){
 		leaguesById.clear();
 	}
+	
+	static void resize(){
+		leaguesById = Collections.synchronizedMap(new LruCache<Long, League[]>(cache_size));
+	}
 }

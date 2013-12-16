@@ -107,4 +107,8 @@ class GameQuery extends Query{
 	static void clear() {
 		gamesById.clear();
 	}
+	
+	static void resize(){
+		gamesById = Collections.synchronizedMap(new LruCache<Long, Game[]>(cache_size));
+	}
 }

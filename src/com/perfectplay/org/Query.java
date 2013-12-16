@@ -5,11 +5,6 @@ abstract class Query {
 	private static String host = "http://prod.api.pvp.net";
 	
 	/*
-	 * Clears the Cache
-	 */
-	static void clear() {}
-	
-	/*
 	 * Generates a URL to get a summoner's mastery pages
 	 */
 	protected static String generateMasteryURL(long summonerId){
