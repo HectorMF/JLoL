@@ -2,6 +2,7 @@ JLoL
 ====
 
 JLoL is a Java wrapper for the League of Legends API with built in data caching and cache timeout to minimize API calls.
+The library provides custom Exception handling as well as LRU replacement for efficient data storage. 
 
 ## Setting Up
 
