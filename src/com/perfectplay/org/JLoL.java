@@ -1,11 +1,11 @@
 package com.perfectplay.org;
 
 
-public class JLoL {
+public class JLOL {
 	public static String api_key = "";
 	public static String region = "";
 
-	private JLoL() { }
+	private JLOL() { }
 	
 	/**
 	 * This method returns the champion with the given name. If the champion doesn't exist,

@@ -36,6 +36,10 @@ public class Summoner extends CachedObject{
 		return LeagueQuery.getLeague(id);
 	}
 	
+	public Game[] getRecentGames(){
+		return GameQuery.getGames(id);
+	}
+	
 	public long getId(){
 		return id;
 	}
