@@ -1,8 +1,7 @@
 package com.perfectplay.org;
 
+import java.util.Date;
 import java.util.HashMap;
-
-import org.joda.time.DateTime;
 
 public class RunePage extends CachedObject {
 	private long summoner;
@@ -10,7 +9,7 @@ public class RunePage extends CachedObject {
 	private boolean active;
 	private String name;
 	
-	RunePage(DateTime time_cached, long summoner, Rune[] runes, boolean active, String name){
+	RunePage(Date time_cached, long summoner, Rune[] runes, boolean active, String name){
 		this.time_cached = time_cached;
 		this.summoner = summoner;
 		for(int i = 0; i < runes.length; i ++){

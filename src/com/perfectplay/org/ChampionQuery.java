@@ -2,15 +2,13 @@ package com.perfectplay.org;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-
-import org.joda.time.DateTime;
-
 
 /*
 * Used to query the League of Legends servers for a list of the
@@ -44,7 +42,7 @@ class ChampionQuery extends Query{
 		    	champ = (JsonObject)champs.get(i);
 		    	String name = champ.getString("name");
 		    	champions.put(name.toLowerCase(), new Champion(
-		    			new DateTime(),
+		    			new Date(),
 		    			Long.parseLong(champ.get("id").toString()), 
 		    			name, 
 		    			champ.getBoolean("active"), 
@@ -70,7 +68,7 @@ class ChampionQuery extends Query{
 		if(champion == null){
 			query();
 			champion = champions.get(name.toLowerCase());
-		}else if(DateTime.now().isAfter(champion.getTimeCached().plus(cache_refresh))){
+		}else if(new Date().after(new Date(champion.getTimeCached().getTime() + cache_refresh))){
 			query();
 			champion = champions.get(name.toLowerCase());
 		}
@@ -100,7 +98,7 @@ class ChampionQuery extends Query{
 		if(champs.length == 0){
 			query();
 			champs = ChampionQuery.champions.values().toArray(new Champion[ChampionQuery.champions.values().size()]);
-		}else if(DateTime.now().isAfter(champs[0].getTimeCached().plus(cache_refresh))){
+		}else if(new Date().after(new Date(champs[0].getTimeCached().getTime() + cache_refresh))){
 			query();
 			champs = ChampionQuery.champions.values().toArray(new Champion[ChampionQuery.champions.values().size()]);
 		}
@@ -115,7 +113,7 @@ class ChampionQuery extends Query{
 		if(freeChampions.size() == 0){
 			query();
 			freeChampions = new ArrayList<Champion>(ChampionQuery.champions.values());
-		}else if(DateTime.now().isAfter(freeChampions.get(0).getTimeCached().plus(cache_refresh))){
+		}else if(new Date().after(new Date(freeChampions.get(0).getTimeCached().getTime() + cache_refresh))){
 			query();
 			freeChampions = new ArrayList<Champion>(ChampionQuery.champions.values());
 		}

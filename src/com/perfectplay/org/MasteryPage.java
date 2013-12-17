@@ -1,6 +1,6 @@
 package com.perfectplay.org;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 
 public class MasteryPage extends CachedObject{
@@ -9,7 +9,7 @@ public class MasteryPage extends CachedObject{
 	private boolean active;
 	private String name;
 	
-	MasteryPage(DateTime time_cached, long summoner, Talent[] talents, boolean active, String name){
+	MasteryPage(Date time_cached, long summoner, Talent[] talents, boolean active, String name){
 		this.time_cached = time_cached;
 		this.summoner = summoner;
 		this.talents = talents;

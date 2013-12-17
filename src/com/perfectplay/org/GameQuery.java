@@ -3,6 +3,7 @@ package com.perfectplay.org;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
 
 import javax.json.Json;
@@ -10,7 +11,6 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
-import org.joda.time.DateTime;
 
 class GameQuery extends Query{
 	static long cache_refresh = 3600000l;
@@ -77,7 +77,7 @@ class GameQuery extends Query{
 			    	
 			    	
 		    	}
-		    	recentGames[i] = new Game(new DateTime(), summonerId, championId, createDate, createDateStr, 
+		    	recentGames[i] = new Game(new Date(), summonerId, championId, createDate, createDateStr, 
 		    								playerArray, gameId, gameMode, gameType, invalid, level, mapId, 
 		    								spell1, spell2, statistics, subType, teamId);
 		    }
@@ -96,7 +96,7 @@ class GameQuery extends Query{
 			query(id);
 			games = gamesById.get(id);
 		}else if(games.length > 0){
-			if(DateTime.now().isAfter(games[0].getTimeCached().plus(cache_refresh))){
+			if(new Date().after(new Date(games[0].getTimeCached().getTime() + cache_refresh))){
 				query(id);
 				games = gamesById.get(id);
 			}

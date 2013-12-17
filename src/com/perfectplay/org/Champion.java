@@ -1,6 +1,6 @@
 package com.perfectplay.org;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 public class Champion extends CachedObject{
 	private long id;
@@ -21,7 +21,7 @@ public class Champion extends CachedObject{
 	
 	private boolean freeToPlay;
 	
-	Champion(DateTime time_cached, long id, String name, boolean active, int attackRank, 
+	Champion(Date time_cached, long id, String name, boolean active, int attackRank, 
 			int magicRank, int defenseRank, int difficultyRank, boolean botEnabled, 
 			boolean botMmEnabled, boolean rankedPlayEnabled, boolean freeToPlay){
 		this.time_cached = time_cached;

@@ -1,6 +1,6 @@
 package com.perfectplay.org;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 public class League extends CachedObject {
 	private String name;
@@ -9,7 +9,7 @@ public class League extends CachedObject {
 	private long timeStamp;
 	private LeagueItem[] entries;
 	
-	League(DateTime time_cached, String name, String queue, String tier, long timeStamp, LeagueItem[] entries){
+	League(Date time_cached, String name, String queue, String tier, long timeStamp, LeagueItem[] entries){
 		this.time_cached = time_cached;
 		this.name = name;
 		this.queue = queue;

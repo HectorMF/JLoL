@@ -1,6 +1,12 @@
 package com.perfectplay.org;
 
-
+/**
+* Primary interface used to query the League of Legends servers. 
+* LRU caching is used to efficiently cache queried data.
+* 
+* @author Hector Medina-Fetterman
+* @version 1.0 12/16/13
+*/
 public class JLOL {
 	public static String api_key = "";
 	public static String region = "";
@@ -163,6 +169,38 @@ public class JLOL {
 	public static League[] getLeagues(String name) throws InvalidQueryException{
 		Summoner summoner = getSummoner(name);
 		return LeagueQuery.getLeague(summoner.getId());
+	}
+	
+	/**
+	 * Resizes the cache for each query type. This will clear all cached items.
+	 * The count should be greater than or equal to 0.
+	 * 
+	 * @param  count the cache size
+	 */
+	public static void setCacheSize(int count){
+		int temp = count;
+		if(count >= 0) temp = 1;
+		SummonerQuery.cache_size = temp;
+		GameQuery.cache_size = temp;
+		LeagueQuery.cache_size = temp;
+		SummonerQuery.resize();
+		GameQuery.resize();
+		LeagueQuery.resize();
+	}
+	
+	/**
+	 * Sets the timeout for cached items. Items which have been previously 
+	 * cached will still follow this timeout. A timeout of 0 will cache items,
+	 * but not take advantage of the cache, as the items will immediately timeout.
+	 * 
+	 * @param  hours timeout in hours
+	 */
+	public static void setCacheTimeout(float hours){
+		double toMillis = hours * 3600000l;
+		SummonerQuery.cache_refresh = (long) toMillis;
+		GameQuery.cache_refresh = (long) toMillis;
+		LeagueQuery.cache_refresh = (long) toMillis;
+		ChampionQuery.cache_refresh = (long) toMillis;
 	}
 	
 	/**

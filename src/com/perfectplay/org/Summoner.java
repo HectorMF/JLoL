@@ -1,6 +1,6 @@
 package com.perfectplay.org;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 
 public class Summoner extends CachedObject{
@@ -14,7 +14,7 @@ public class Summoner extends CachedObject{
 	private long revisionDate;
 	private String revisionDateStr;
 
-	Summoner(DateTime time_cached, long id, String name, long level, int profileIconId, long revisionDate, String revisionDateStr){
+	Summoner(Date time_cached, long id, String name, long level, int profileIconId, long revisionDate, String revisionDateStr){
 		this.time_cached = time_cached;
 		this.id = id;
 		this.name = name;

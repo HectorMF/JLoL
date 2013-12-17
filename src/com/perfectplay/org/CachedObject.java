@@ -1,11 +1,11 @@
 package com.perfectplay.org;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 abstract class CachedObject {
-	protected DateTime time_cached;
+	protected Date time_cached;
 	
-	public DateTime getTimeCached(){
+	public Date getTimeCached(){
 		return time_cached;
 	}
 }

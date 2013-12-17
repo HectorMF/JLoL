@@ -3,6 +3,7 @@ package com.perfectplay.org;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +11,6 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import org.joda.time.DateTime;
 
 /*
 * Used to query the League of Legends servers for a summoner related queries. 
@@ -43,7 +43,7 @@ class SummonerQuery extends Query{
 		    String sName = summoner.getString("name");
 
 		    summonersByName.put(sName.toLowerCase(), new Summoner(
-		    			new DateTime(),
+		    			new Date(),
 		    			Long.parseLong(summoner.get("id").toString()), 
 		    			sName, 
 		    			Long.parseLong(summoner.get("summonerLevel").toString()), 
@@ -52,7 +52,7 @@ class SummonerQuery extends Query{
 		    			summoner.getString("revisionDateStr")));
 		    
 		    summonersById.put(Long.parseLong(summoner.get("id").toString()), new Summoner(
-	    			new DateTime(),
+	    			new Date(),
 	    			Long.parseLong(summoner.get("id").toString()), 
 	    			sName, 
 	    			Long.parseLong(summoner.get("summonerLevel").toString()), 
@@ -80,7 +80,7 @@ class SummonerQuery extends Query{
 		    String sName = summoner.getString("name");
 
 		    summonersByName.put(sName.toLowerCase(), new Summoner(
-		    			new DateTime(),
+		    			new Date(),
 		    			Long.parseLong(summoner.get("id").toString()), 
 		    			sName, 
 		    			Long.parseLong(summoner.get("summonerLevel").toString()), 
@@ -89,7 +89,7 @@ class SummonerQuery extends Query{
 		    			summoner.getString("revisionDateStr")));
 		    
 		    summonersById.put(Long.parseLong(summoner.get("id").toString()), new Summoner(
-	    			new DateTime(),
+	    			new Date(),
 	    			Long.parseLong(summoner.get("id").toString()), 
 	    			sName, 
 	    			Long.parseLong(summoner.get("summonerLevel").toString()), 
@@ -129,7 +129,7 @@ class SummonerQuery extends Query{
 		    		int tRank = talent.getInt("rank");
 		    		t[j] = new Talent(tId,tName,tRank);
 		    	}
-		    	masteries[i] = new MasteryPage(new DateTime(), id, t, current, name);
+		    	masteries[i] = new MasteryPage(new Date(), id, t, current, name);
 		    }
 		    
 		    masteriesById.put(id, masteries);
@@ -172,7 +172,7 @@ class SummonerQuery extends Query{
 		    		int rTier = r.getInt("tier");
 		    		rune[j] = new Rune(slot, rDesc,rId,rName,rTier);
 		    	}
-		    	runes[i] = new RunePage(new DateTime(), pId, rune, current, name);
+		    	runes[i] = new RunePage(new Date(), pId, rune, current, name);
 		    }
 		    
 		    runesById.put(id, runes);
@@ -190,7 +190,7 @@ class SummonerQuery extends Query{
 		if(summoner == null){
 			queryByName(name);
 			summoner = summonersByName.get(name.toLowerCase());
-		}else if(DateTime.now().isAfter(summoner.getTimeCached().plus(cache_refresh))){
+		}else if(new Date().after(new Date(summoner.getTimeCached().getTime() + cache_refresh))){
 			queryByName(name);
 			summoner = summonersByName.get(name.toLowerCase());
 		}
@@ -205,7 +205,7 @@ class SummonerQuery extends Query{
 		if(summoner == null){
 			queryById(id);
 			summoner = summonersById.get(id);
-		}else if(DateTime.now().isAfter(summoner.getTimeCached().plus(cache_refresh))){
+		}else if(new Date().after(new Date(summoner.getTimeCached().getTime() + cache_refresh))){
 			queryById(id);
 			summoner = summonersById.get(id);
 		}
@@ -220,7 +220,7 @@ class SummonerQuery extends Query{
 		if(pages == null){
 			queryMasteries(id);
 			pages = masteriesById.get(id);
-		}else if(DateTime.now().isAfter(pages[0].getTimeCached().plus(cache_refresh))){
+		}else if(new Date().after(new Date(pages[0].getTimeCached().getTime() + cache_refresh))){
 			queryMasteries(id);
 			pages = masteriesById.get(id);
 		}
@@ -235,7 +235,7 @@ class SummonerQuery extends Query{
 		if(pages == null){
 			queryRunes(id);
 			pages = runesById.get(id);
-		}else if(DateTime.now().isAfter(pages[0].getTimeCached().plus(cache_refresh))){
+		}else if(new Date().after(new Date(pages[0].getTimeCached().getTime() + cache_refresh))){
 			queryRunes(id);
 			pages = runesById.get(id);
 		}

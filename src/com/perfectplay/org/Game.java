@@ -1,6 +1,6 @@
 package com.perfectplay.org;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 public class Game extends CachedObject{
 	
@@ -26,7 +26,7 @@ public class Game extends CachedObject{
 	private long createDate;
 	private String createDateStr;
 
-	Game(DateTime time_cached, long summonerId, int championId, long createDate, String createDateStr, GamePlayer[] players, long gameId, String gameMode, String gameType,
+	Game(Date time_cached, long summonerId, int championId, long createDate, String createDateStr, GamePlayer[] players, long gameId, String gameMode, String gameType,
 			boolean invalid, int level, int mapId, int spell1, int spell2, GameStatistic[] statistics, String subType, int teamId){
 		this.time_cached = time_cached;
 		this.summonerId = summonerId;

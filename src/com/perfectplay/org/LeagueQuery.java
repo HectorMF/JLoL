@@ -3,14 +3,13 @@ package com.perfectplay.org;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
 
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-
-import org.joda.time.DateTime;
 
 class LeagueQuery extends Query{
 	static long cache_refresh = 3600000l;
@@ -68,7 +67,7 @@ class LeagueQuery extends Query{
 		    				playerOrTeamId, playerOrTeamName, queueType, rank, lTier,
 		    				timeUntilDecay, wins);
 		    	}
-		    	leagues[i] = new League(new DateTime(), name, queue, tier, timestamp, leagueItems);
+		    	leagues[i] = new League(new Date(), name, queue, tier, timestamp, leagueItems);
 		    }  
 	    	leaguesById.put(id, leagues);
 		} catch (IOException e) {
@@ -82,7 +81,7 @@ class LeagueQuery extends Query{
 			query(id);
 			league = leaguesById.get(id);
 		}else if(league.length > 0){
-			if(DateTime.now().isAfter(league[0].getTimeCached().plus(cache_refresh))){
+			if(new Date().after(new Date(league[0].getTimeCached().getTime() + cache_refresh))){
 				query(id);
 				league = leaguesById.get(id);
 			}
