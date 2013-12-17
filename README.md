@@ -24,7 +24,7 @@ This code is used to setup the environment for querying.
 	JLOL.setCacheTimeOut(1);
 ```
 
-Simply changing the api_key or region will alter the parameters for newly made queries. To turn off caching, simply set the cache size to 0. Timeout determines if a cached item is too old to be reliable. Cached elements that pass their age limit, are not removed from the cache.
+Simply changing the api_key or region will alter the parameters for newly made queries. To turn off caching, simply set the cache size to 0. Timeout determines if a cached item is too old to be reliable. Cached elements that pass their age limit, are removed from the cache.
 
 ## Querying
 
@@ -67,9 +67,9 @@ The other queries follow this format and are also found under the JLOL class.
 -Champion queries  
 -Summoner queries  
 -Rune page queries  
--Mastery queries 
--Game queries 
--League queries  
+-Mastery queries  
+-Game queries  
+-League queries   
 
 ##### To DO:
 -Team queries  
@@ -78,7 +78,7 @@ The other queries follow this format and are also found under the JLOL class.
 ## Exception Handling
 
 JLoL uses a custom unchecked exception to handle invalid queries made to the League of Legends servers. 
-As the exceptions are unchecked, handling them is not enforced by the compiler. Below is an example on how to handle InvalidQueryException:
+As the exceptions are unchecked, handling them is not enforced by the compiler. Below is an example of how to handle an InvalidQueryException:
 
 ```java
 	try{
@@ -91,7 +91,7 @@ As the exceptions are unchecked, handling them is not enforced by the compiler. 
 		}
 		
 		if(e.error == InvalidQueryException.REQUEST_LIMIT){
-			System.out.println("only 5 per 10 seconds and 50 per 10 minutes!");
+			System.out.println("only 10 per 10 seconds and 500 per 10 minutes!");
 		}
 		//etc....
 		
@@ -100,7 +100,7 @@ As the exceptions are unchecked, handling them is not enforced by the compiler. 
 
 ## Utility
 
-Getting the total number of queries made:
+Getting the total number of queries:
 
 ```java
 	int queries = JLOL.getQueryCount();
