@@ -65,6 +65,19 @@ abstract class Query {
 		return host + "/api/" + JLOL.region + "/v2.1/league/by-summoner/" + id + "?api_key=" + JLOL.api_key;
 	}
 
+	/*
+	 * Generates a URL to get statistics info
+	 */
+	protected static String generateStatisticURL(long id, String season){
+		return host + "/api/lol/" + JLOL.region + "/v1.1/stats/by-summoner/" + id + "/summary?season=" + season + "&api_key=" + JLOL.api_key;
+	}
+	
+	/*
+	 * Generates a URL to get ranked statistics info
+	 */
+	protected static String generateRankedStatisticURL(long id, String season){
+		return host + "/api/lol/" + JLOL.region + "/v1.1/stats/by-summoner/" + id + "/ranked?season=" + season + "&api_key=" + JLOL.api_key;
+	}
 	
 	
 }

@@ -1,5 +1,9 @@
 package com.perfectplay.org;
 
+import java.util.Map;
+
+import com.perfectplay.org.constants.Season;
+
 /**
 * Primary interface used to query the League of Legends servers. 
 * LRU caching is used to efficiently cache queried data.
@@ -172,6 +176,60 @@ public class JLOL {
 	}
 	
 	/**
+	 * This method returns a map of statistic types to statistics for the given type.
+	 * Altering the Map will alter the cached data. 
+	 * Use the season constants to choose a valid season.
+	 *
+	 * @param  id the id of the summoner to query
+	 * @param  season the season to query for
+	 * @return  a map of statistic types to statistics
+	 * @throws InvalidQueryException if the query does not complete for any reason.
+	 */
+	public static Map<String, SummaryStatistic> getSummaryStatistics(long id, String season) throws InvalidQueryException{
+		return StatisticQuery.getSummaryStatistics(id, season);
+	}
+	
+	/**
+	 * This method returns a map of statistic types to statistics for the given type.
+	 * Altering the Map will alter the cached data. 
+	 * Use the season constants to choose a valid season.
+	 *
+	 * @param  name the name of the summoner to query
+	 * @param  season the season to query for
+	 * @return  a map of statistic types to statistics
+	 * @throws InvalidQueryException if the query does not complete for any reason.
+	 */
+	public static Map<String, SummaryStatistic> getSummaryStatistics(String name, String season) throws InvalidQueryException{
+		return StatisticQuery.getSummaryStatistics(SummonerQuery.getSummoner(name).getId(), season);
+	}
+	
+	/**
+	 * This method returns a map of statistic types to statistics for the given type.
+	 * Altering the Map will alter the cached data. 
+	 * The values returned are for the current season.
+	 *
+	 * @param  id the id of the summoner to query
+	 * @return  a map of statistic types to statistics
+	 * @throws InvalidQueryException if the query does not complete for any reason.
+	 */
+	public static Map<String, SummaryStatistic> getSummaryStatistics(long id) throws InvalidQueryException{
+		return StatisticQuery.getSummaryStatistics(id, Season.CURRENT);
+	}
+	
+	/**
+	 * This method returns a map of statistic types to statistics for the given type.
+	 * Altering the Map will alter the cached data. 
+	 * The values returned are for the current season.
+	 *
+	 * @param  name the name of the summoner to query
+	 * @return  a map of statistic types to statistics
+	 * @throws InvalidQueryException if the query does not complete for any reason.
+	 */
+	public static Map<String, SummaryStatistic> getSummaryStatistics(String name) throws InvalidQueryException{
+		return StatisticQuery.getSummaryStatistics(SummonerQuery.getSummoner(name).getId(), Season.CURRENT);
+	}
+	
+	/**
 	 * Resizes the cache for each query type. This will clear all cached items.
 	 * The count should be greater than or equal to 0.
 	 * 
@@ -201,6 +259,7 @@ public class JLOL {
 		GameQuery.cache_refresh = (long) toMillis;
 		LeagueQuery.cache_refresh = (long) toMillis;
 		ChampionQuery.cache_refresh = (long) toMillis;
+		StatisticQuery.cache_refresh = (long) toMillis;
 	}
 	
 	/**
@@ -218,5 +277,6 @@ public class JLOL {
 		GameQuery.clear();
 		SummonerQuery.clear();
 		LeagueQuery.clear();
+		StatisticQuery.clear();
 	}
 }
